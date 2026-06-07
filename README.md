@@ -1,7 +1,3 @@
-
-
-https://github.com/user-attachments/assets/a9ba1a85-8d0b-4a99-b25f-92d82414726a
-
 # 🌍 GeoPulse Live – LAB 12
 
 Application Android de **localisation en temps réel** permettant de récupérer les coordonnées GPS d’un appareil mobile, de les envoyer vers un backend PHP/MySQL, puis de les afficher sur une carte Google Maps sous forme de marqueurs.
@@ -103,6 +99,8 @@ La vidéo montre :
 - Le test de l’API `showPositions.php`
 - La récupération JSON des positions
 - Le fonctionnement global du système
+
+https://github.com/user-attachments/assets/a9ba1a85-8d0b-4a99-b25f-92d82414726a
 
 ---
 
