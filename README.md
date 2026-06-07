@@ -29,27 +29,22 @@ Le but de ce laboratoire est de :
 
 **GeoPulse Live** est une application mobile qui permet de suivre et visualiser des positions GPS.
 
-L’application contient deux écrans principaux :
+L’application contient deux parties principales :
 
-### 📍 Écran principal
+### 📍 Partie Android GPS
 
-L’écran principal affiche :
+L’application récupère les coordonnées GPS de l’appareil, puis envoie automatiquement les données vers le serveur local.
 
-- La latitude actuelle
-- La longitude actuelle
-- La précision GPS
-- L’état de synchronisation avec le serveur
-- Un bouton permettant d’ouvrir la carte
+Données envoyées :
 
-### 🗺️ Écran Google Maps
+- Latitude
+- Longitude
+- Date et heure de capture
+- Identifiant de l’appareil
 
-L’écran carte permet de :
+### 🗺️ Partie Google Maps
 
-- Récupérer les positions stockées dans MySQL
-- Afficher chaque position sous forme de marqueur
-- Visualiser la date de capture
-- Identifier l’appareil associé à la position
-- Centrer automatiquement la caméra sur les points enregistrés
+L’activité Google Maps récupère les positions enregistrées dans MySQL à travers une API JSON, puis affiche chaque position sous forme de marqueur sur la carte.
 
 ---
 
@@ -59,8 +54,9 @@ L’écran carte permet de :
 - Demande automatique de permission localisation
 - Envoi des coordonnées vers une API PHP
 - Insertion des données dans une table MySQL
-- Récupération des positions en JSON
+- Récupération des positions au format JSON
 - Affichage dynamique des marqueurs sur Google Maps
+- Utilisation de Google Maps Activity
 - Interface Android personnalisée avec :
   - Fond en dégradé
   - Cartes arrondies
@@ -97,17 +93,12 @@ Demo/
 
 La vidéo montre :
 
-- Le test de l’API PHP
-- L’insertion dans MySQL
+- La création et la configuration de Google Maps Activity
+- Le test de l’API `createPosition.php`
+- L’insertion d’une position dans MySQL
+- Le test de l’API `showPositions.php`
 - La récupération JSON des positions
-- Le lancement de l’application Android
-- L’affichage des coordonnées GPS
-- L’ouverture de Google Maps
-- L’apparition des marqueurs sur la carte
-
-
-https://github.com/user-attachments/assets/ad75223b-c76d-4554-8232-73825709c708
-
+- Le fonctionnement global du système
 
 ---
 
@@ -303,6 +294,10 @@ Réponse attendue :
 }
 ```
 
+### Capture du test `createPosition.php`
+
+![Test createPosition.php avec REST Client](screenshots/createposition_rest-client.png)
+
 ---
 
 ### 2. Récupération des positions
@@ -327,6 +322,25 @@ Réponse attendue :
   ]
 }
 ```
+
+### Capture du test `showPositions.php`
+
+![Test showPositions.php avec REST Client](screenshots/showpositions_rest-client.png)
+
+---
+
+## ✅ Test réussi du backend
+
+Après l’envoi d’une position avec `createPosition.php`, la réponse JSON confirme que l’insertion a été réalisée correctement.
+
+![Test réussi de l’insertion](screenshots/test-reussi.png)
+
+Ce test valide que :
+
+- L’API reçoit bien les paramètres
+- La méthode POST fonctionne correctement
+- La connexion PHP/MySQL est fonctionnelle
+- La position est enregistrée avec succès
 
 ---
 
@@ -374,6 +388,47 @@ MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
 ```
 
 Le fichier `local.properties` ne doit pas être poussé sur GitHub.
+
+---
+
+## 🗺️ Création de Google Maps Activity
+
+Une deuxième activité a été créée pour afficher les positions sur une carte.
+
+Nom de l’activité :
+
+```text
+LiveMapActivity
+```
+
+Nom du layout :
+
+```text
+activity_live_map.xml
+```
+
+Cette activité utilise :
+
+- `SupportMapFragment`
+- `GoogleMap`
+- `OnMapReadyCallback`
+- `JsonObjectRequest`
+- `MarkerOptions`
+- `LatLng`
+
+### Capture de création de l’activité Google Maps
+
+![Création de Google Maps Activity](screenshots/google_maps_activity-creation.png)
+
+---
+
+## ⚙️ Paramètres de Google Maps Activity
+
+Pendant la création de l’activité, les paramètres principaux ont été configurés afin d’intégrer correctement Google Maps dans l’application.
+
+### Capture des paramètres de Google Maps Activity
+
+![Paramètres de Google Maps Activity](screenshots/google_maps_activity_parameters%20.png)
 
 ---
 
@@ -437,6 +492,10 @@ Résultat obtenu :
 }
 ```
 
+Capture associée :
+
+![Insertion via createPosition.php](screenshots/createposition_rest-client.png)
+
 Ce test valide que le backend reçoit bien les paramètres envoyés en POST.
 
 ---
@@ -474,11 +533,27 @@ Résultat attendu :
 }
 ```
 
+Capture associée :
+
+![Récupération JSON via showPositions.php](screenshots/showpositions_rest-client.png)
+
 Ce test valide que l’API peut renvoyer les positions stockées.
 
 ---
 
-### Test 5 — Permission GPS Android
+### Test 5 — Création et configuration de Google Maps Activity
+
+L’activité Google Maps a été ajoutée au projet Android afin d’afficher les positions GPS enregistrées.
+
+Captures associées :
+
+![Création Google Maps Activity](screenshots/google_maps_activity-creation.png)
+
+![Configuration Google Maps Activity](screenshots/google_maps_activity_parameters%20.png)
+
+---
+
+### Test 6 — Permission GPS Android
 
 Au lancement de l’application, Android demande la permission de localisation.
 
@@ -490,7 +565,7 @@ La permission est demandée et l’application démarre le suivi GPS après acce
 
 ---
 
-### Test 6 — Envoi depuis l’application Android
+### Test 7 — Envoi depuis l’application Android
 
 Lorsque la position est détectée, l’application envoie automatiquement :
 
@@ -509,7 +584,7 @@ Une nouvelle position apparaît dans MySQL.
 
 ---
 
-### Test 7 — Affichage Google Maps
+### Test 8 — Affichage Google Maps
 
 En cliquant sur le bouton :
 
@@ -527,24 +602,32 @@ Les marqueurs apparaissent sur la carte.
 
 ---
 
-## 📸 Aperçu de l’application
+## 📸 Captures d’écran du laboratoire
 
-Les captures d’écran du laboratoire sont disponibles dans le dossier :
+Les captures utilisées dans ce rapport sont disponibles dans le dossier :
 
 ```text
 screenshots/
+├── createposition_rest-client.png
+├── google_maps_activity-creation.png
+├── google_maps_activity_parameters .png
+├── showpositions_rest-client.png
+└── test-reussi.png
 ```
 
-Captures recommandées pour le rapport :
+### Galerie des captures
 
-- Structure du projet PHP
-- Table MySQL `position`
-- Test réussi de `createPosition.php`
-- Réponse JSON de `showPositions.php`
-- Interface principale Android
-- Permission localisation
-- Carte Google Maps avec marqueurs
-- Détail d’un marqueur
+| Test API createPosition | Test API showPositions |
+|---|---|
+| ![createPosition](screenshots/createposition_rest-client.png) | ![showPositions](screenshots/showpositions_rest-client.png) |
+
+| Création Google Maps Activity | Paramètres Google Maps Activity |
+|---|---|
+| ![Google Maps Activity Creation](screenshots/google_maps_activity-creation.png) | ![Google Maps Activity Parameters](screenshots/google_maps_activity_parameters%20.png) |
+
+| Test réussi |
+|---|
+| ![Test réussi](screenshots/test-reussi.png) |
 
 ---
 
@@ -556,14 +639,16 @@ Le scénario suivi dans la vidéo de démonstration est :
 1. Lancement de XAMPP
 2. Vérification de la base MySQL
 3. Test de createPosition.php
-4. Vérification de l’insertion dans phpMyAdmin
+4. Vérification de l’insertion
 5. Test de showPositions.php
-6. Lancement de l’application Android
-7. Autorisation de la localisation
-8. Affichage latitude / longitude / précision
-9. Envoi automatique vers le serveur
-10. Ouverture de Google Maps
-11. Affichage des marqueurs enregistrés
+6. Création de Google Maps Activity
+7. Configuration de la clé Google Maps
+8. Lancement de l’application Android
+9. Autorisation de la localisation
+10. Affichage latitude / longitude / précision
+11. Envoi automatique vers le serveur
+12. Ouverture de Google Maps
+13. Affichage des marqueurs enregistrés
 ```
 
 ---
@@ -595,6 +680,7 @@ http://10.0.2.2/localisation/
 - La permission GPS doit être acceptée
 - La clé Google Maps doit être valide
 - Le trafic HTTP local nécessite `usesCleartextTraffic="true"`
+- Le champ envoyé sous le nom `date` est stocké dans MySQL sous le champ `date_position`
 
 ---
 
@@ -644,7 +730,11 @@ GeoPulseLive/
 │   └── demo_geopulse_live.mp4
 │
 ├── screenshots/
-│   └── captures_du_lab
+│   ├── createposition_rest-client.png
+│   ├── google_maps_activity-creation.png
+│   ├── google_maps_activity_parameters .png
+│   ├── showpositions_rest-client.png
+│   └── test-reussi.png
 │
 └── README.md
 ```
