@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="deep_navy">#101828</color>
+    <color name="violet_pulse">#7C3AED</color>
+    <color name="blue_orbit">#2563EB</color>
+    <color name="cyan_glow">#06B6D4</color>
+    <color name="mint_soft">#5EEAD4</color>
+    <color name="white_soft">#F8FAFC</color>
+    <color name="card_white">#EEFFFFFF</color>
+    <color name="text_dark">#172033</color>
+    <color name="text_muted">#64748B</color>
+</resources>

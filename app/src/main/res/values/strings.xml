@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GeoPulseLive</string>
+    <string name="title_activity_live_map">LiveMapActivity</string>
+</resources>
