@@ -105,6 +105,10 @@ La vidéo montre :
 - L’ouverture de Google Maps
 - L’apparition des marqueurs sur la carte
 
+
+https://github.com/user-attachments/assets/ad75223b-c76d-4554-8232-73825709c708
+
+
 ---
 
 ## 🗄️ Base de données
